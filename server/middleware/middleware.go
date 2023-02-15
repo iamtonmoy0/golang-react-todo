@@ -9,8 +9,8 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"go.mongodb.org//mongo-driver/mongo/options"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 var collection *mongo.Collection
@@ -54,9 +54,9 @@ func GetAllTasks(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(payload)
 }
 
-// create func
+// create task func
 
-func CreateTask() {
+func CreateTask(w http.ResponseWriter, r *http.Request) {
 
 }
 
