@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/gorilla/mux"
 	"github.com/iamtonmoy0/golang-react-todo/models"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -71,6 +72,13 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 
 // task complete func
 func TaskComplete(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST")
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
+	params := mux.Vars(r)
+	TaskComplete(params["id"])
+	json.NewEncoder(w).Encode(params["id"])
 
 }
 
@@ -86,5 +94,15 @@ func DeleteTask() {
 
 // delete all task func
 func deleteAllTasks() {
+
+}
+
+// get tasks
+func getAllTasks() {
+
+}
+
+// task complete func
+func TaskComplete(task string) {
 
 }
