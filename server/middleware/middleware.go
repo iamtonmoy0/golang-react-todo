@@ -83,17 +83,17 @@ func TaskComplete(w http.ResponseWriter, r *http.Request) {
 }
 
 // task undo func
-func UndoTask() {
+func UndoTask(w http.ResponseWriter, r *http.Request) {
 
 }
 
 // delete task func
-func DeleteTask() {
+func DeleteTask(w http.ResponseWriter, r *http.Request) {
 
 }
 
 // delete all task func
-func deleteAllTasks() {
+func deleteAllTasks(w http.ResponseWriter, r *http.Request) {
 
 }
 
