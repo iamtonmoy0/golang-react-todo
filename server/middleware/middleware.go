@@ -141,7 +141,14 @@ func getAllTasks() []primitive.M {
 
 // task complete func
 func TaskComplete(task string) {
-
+	id, _ := primitive.ObjectIDFromHex()
+	filter := bson.M{"_id": id}
+	update := bson.M{"$set": bson.M{"status": true}}
+	result, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("modified count:", result)
 }
 
 // one insert task
