@@ -2,4 +2,6 @@
 
 # Tech used ~>
 * React 
-* golang
+* Golang
+* Bson
+* mongodb
