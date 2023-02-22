@@ -141,7 +141,7 @@ func getAllTasks() []primitive.M {
 
 // task complete func
 func TaskComplete(task string) {
-	id, _ := primitive.ObjectIDFromHex()
+	id, _ := primitive.ObjectIDFromHex(task)
 	filter := bson.M{"_id": id}
 	update := bson.M{"$set": bson.M{"status": true}}
 	result, err := collection.UpdateOne(context.Background(), filter, update)
@@ -152,10 +152,22 @@ func TaskComplete(task string) {
 }
 
 // one insert task
-func insertOneTask() {
-
+func insertOneTask(task models.ToDoList) {
+	insertResult, err := collection.InsertOne(context.Background(), task)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("Inserted a single record ", insertResult.InsertedID)
 }
-func UndoTask() {
+func UndoTask(task string) {
+	id, _ := primitive.ObjectIDFromHex(task)
+	filter := bson.M{"_id": id}
+	update := bson.M{"$set": bson.M{"status": false}}
+	result, err := collection.UpdateOne(context.Background(), filter, update)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("modified count:", result.ModifiedCount)
 
 }
 func deleteOneTask() {
