@@ -170,9 +170,21 @@ func UndoTask(task string) {
 	fmt.Println("modified count:", result.ModifiedCount)
 
 }
-func deleteOneTask() {
+func deleteOneTask(task string) {
+	id, _ := primitive.ObjectIDFromHex(task)
+	filter := bson.M{"_id": id}
+	d, err := collection.DeleteOne(context.Background(), filter)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("deleted document", d.DeletedCount)
 
 }
-func deleteAllTasks() {
-
+func deleteAllTasks() int64 {
+	d, err := collection.DeleteMany(context.Background(), bson.D{{}}, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("deleted document", d.DeletedCount)
+	return d.DeletedCount
 }
