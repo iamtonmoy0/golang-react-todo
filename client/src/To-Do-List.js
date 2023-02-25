@@ -15,24 +15,39 @@ class ToDoList extends Component{
 	}
 
        ComponentDidMount(){
-	this,getTask();
+	this.getTask();
           }
-onChange=(event)=>{
+      onChange=(event)=>{
 	this.SetState({
 		[event.target.name]:event.target.value,
-	})
+	});
 };
 
 
 // onsubmit func
 
-onSubmit
+onSubmit=()=>{
+	let {task}=this.state;
+	if(task){
+		axios.post(endpoint+"/api/task",
+		{task,},
+		{headers:{
+			"Context-Type":"application/x-www-form-urlencoded",
+		}}).then((res)=>{
+			this.getTask();
+			this.setState({
+				task:"",
+			});
+			console.log(res);
+		});
+	}
+};
 
 
 
 // get-task func
 
-getTask=()=>{
+getTask = ()=>{
 axios.get(endpoint +"/api/task").then((res)=>{
 	if(res.data){
 		this.setState({
@@ -76,8 +91,8 @@ axios.get(endpoint +"/api/task").then((res)=>{
 			items:[],
 
 		});
-	}
-})
+	};
+});
 
 };
 
@@ -92,8 +107,8 @@ updateTask=(id)=>{
 	}).then((res)=>{
 		console.log(res);
 		this.getTask();
-	})
-}
+	});
+};
 
 
 // undo task
@@ -117,8 +132,8 @@ deleteTask=(id)=>{
 	}).then((res)=>{
 		console.log(res);
 		this.getTask();
-	})
-}
+	});
+};
 render(){
 	return(
 		<div>
