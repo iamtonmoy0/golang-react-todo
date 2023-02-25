@@ -86,7 +86,7 @@ axios.get(endpoint +"/api/task").then((res)=>{
 
 updateTask=(id)=>{
 	axios.put(endpoint+"/api/task"+id,{
-		headers:{
+		header:{
 			"Content-Type":"application/x-www-form-urlencoded",
 		},
 	}).then((res)=>{
@@ -99,8 +99,8 @@ updateTask=(id)=>{
 // undo task
 undoTask=(id)=>{
 	axios.put(endpoint +"api/undoTask"+id,{
-		headers:{
-			"Content-Type":"application/c-www-form-urlencoded",
+		header:{
+			"Content-Type":"application/x-www-form-urlencoded",
 		},
 	}).then((res)=>{
 		console.log(res);
@@ -109,6 +109,16 @@ undoTask=(id)=>{
 };
 
 // deleteTask
+deleteTask=(id)=>{
+	axios.delete(endpoint +"api/deleteTask"+id,{
+		header:{
+			"Content-Type":"application/x-www-form-urlencoded"
+		},
+	}).then((res)=>{
+		console.log(res);
+		this.getTask();
+	})
+}
 render(){
 	return(
 		<div>
