@@ -84,11 +84,29 @@ axios.get(endpoint +"/api/task").then((res)=>{
 
 // uprate task func
 
-updateTask
+updateTask=(id)=>{
+	axios.put(endpoint+"/api/task"+id,{
+		headers:{
+			"Content-Type":"application/x-www-form-urlencoded",
+		},
+	}).then((res)=>{
+		console.log(res);
+		this.getTask();
+	})
+}
 
 
 // undo task
-undoTask
+undoTask=(id)=>{
+	axios.put(endpoint +"api/undoTask"+id,{
+		headers:{
+			"Content-Type":"application/c-www-form-urlencoded",
+		},
+	}).then((res)=>{
+		console.log(res);
+		this.getTask();
+	});
+};
 
 // deleteTask
 render(){
