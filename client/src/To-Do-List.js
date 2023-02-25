@@ -17,7 +17,11 @@ class ToDoList extends Component{
        ComponentDidMount(){
 	this,getTask();
           }
-
+onChange=(event)=>{
+	this.SetState({
+		[event.target.name]:event.target.value,
+	})
+};
 render(){
 	return(
 		<div>
@@ -27,11 +31,16 @@ TO DO LIST
 			</Header>
 			</div>
 			<div className="row">
-				<form onSubmit={this .onSubmit}>
+				<form onSubmit={this.onSubmit}>
 					<input type="text" name="task" onChange={this.onChange} value={this.state.task
 					} fluid placeholder="Create Task"></input>
 
+
 				</form>
+			</div>
+			<div  className="row">
+				
+
 			</div>
 		</div>
 	)
