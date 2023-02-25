@@ -33,10 +33,10 @@ func loadTheEnv() {
 }
 func createDBInstance() {
 	// connection string
-	connetionString := os.Getenv("DB_URI")
+	connectionString := os.Getenv("DB_URI")
 	dbName := os.Getenv("DB_NAME")
 	collName := os.Getenv("DB_COLLECTION_NAME")
-	clientOptions := options.Client().ApplyURL(connetionString)
+	clientOptions := options.Client().ApplyURI(connectionString)
 	client, err := mongo.Connect(context.TODO(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
@@ -54,7 +54,7 @@ func createDBInstance() {
 func GetAllTasks(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	payload := GetAllTasks()
+	payload := getAllTasks()
 	json.NewEncoder(w).Encode(payload)
 }
 
@@ -79,7 +79,7 @@ func TaskComplete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "POST")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	params := mux.Vars(r)
-	TaskComplete(params["id"])
+	taskComplete(params["id"])
 	json.NewEncoder(w).Encode(params["id"])
 
 }
@@ -91,7 +91,7 @@ func UndoTask(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Methods", "PUT")
 	w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 	params := mux.Vars(r)
-	UndoTask(params["id"])
+	undoTask(params["id"])
 	json.NewEncoder(w).Encode(params["id"])
 
 }
@@ -117,7 +117,7 @@ func DeleteAllTasks(w http.ResponseWriter, r *http.Request) {
 
 // get tasks
 func getAllTasks() []primitive.M {
-	cur, err := collection.Find(context.Background, bson.D{{}})
+	cur, err := collection.Find(context.Background(), bson.D{{}})
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -140,7 +140,7 @@ func getAllTasks() []primitive.M {
 }
 
 // task complete func
-func TaskComplete(task string) {
+func taskComplete(task string) {
 	id, _ := primitive.ObjectIDFromHex(task)
 	filter := bson.M{"_id": id}
 	update := bson.M{"$set": bson.M{"status": true}}
@@ -159,7 +159,7 @@ func insertOneTask(task models.ToDoList) {
 	}
 	fmt.Println("Inserted a single record ", insertResult.InsertedID)
 }
-func UndoTask(task string) {
+func undoTask(task string) {
 	id, _ := primitive.ObjectIDFromHex(task)
 	filter := bson.M{"_id": id}
 	update := bson.M{"$set": bson.M{"status": false}}
